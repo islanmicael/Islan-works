@@ -2,6 +2,7 @@
 // Cuida só das duas rotas de API que buscam dados do F-Droid
 // (contornando o bloqueio de CORS). Tudo que não for essas duas
 // rotas passa direto pros arquivos normais do site (env.ASSETS).
+// trigger deploy
 
 export default {
   async fetch(request, env) {
