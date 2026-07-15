@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://islan-fx.netlify.app/sitemap.xml
