@@ -1,0 +1,3325 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<link rel="manifest" href="/manifest.json">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>islan.fx - Baixar Jogos e Apps Grátis para Android (APK Seguro, sem Anúncios)</title>
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<meta name="description" content="Baixe jogos e aplicativos grátis para Android em APK, direto no navegador, sem cadastro. Loja de apps verificados pelo F-Droid, sem anúncios ou rastreadores.">
+<meta name="keywords" content="baixar jogo, baixar apk, baixar aplicativo grátis, loja de apps android, apk grátis, apps sem anúncios, islan fx">
+<link rel="canonical" href="https://islan-fx.netlify.app/">
+<meta property="og:title" content="islan.fx - Baixar Jogos e Apps Grátis para Android">
+<meta property="og:description" content="Loja de apps e jogos grátis em APK, verificados pelo F-Droid, sem anúncios ou rastreadores.">
+<meta property="og:url" content="https://islan-fx.netlify.app/">
+<meta property="og:image" content="https://islan-fx.netlify.app/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="islan.fx - Baixar Jogos e Apps Grátis para Android">
+<meta name="twitter:description" content="Loja de apps e jogos grátis em APK, verificados pelo F-Droid, sem anúncios ou rastreadores.">
+<meta name="twitter:image" content="https://islan-fx.netlify.app/apple-touch-icon.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "islan.fx",
+  "url": "https://islan-fx.netlify.app/",
+  "description": "Loja de apps e jogos grátis para Android em APK, verificados pelo F-Droid.",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://islan-fx.netlify.app/?busca={search_term_string}",
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
+<script src="conteudo.js"></script>
+<style>
+  :root {
+    --bg-black: #05070d;
+    --bg-panel: #0b0f1a;
+    --blue-electric: #2f6dff;
+    --blue-glow: #5b8cff;
+    --blue-dim: #16223f;
+    --text-dim: #6b7690;
+    --line: #1a2236;
+  }
+
+  /* ---------- MODO CLARO ---------- */
+  html[data-theme="light"] {
+    --bg-black: #f3f6ff;
+    --bg-panel: #ffffff;
+    --blue-electric: #2f6dff;
+    --blue-glow: #5b8cff;
+    --blue-dim: #dbe6ff;
+    --text-dim: #57657f;
+    --line: #d9e3f7;
+  }
+  html[data-theme="light"] body { color: #10182b; }
+  html[data-theme="light"] .wordmark,
+  html[data-theme="light"] .welcome-msg,
+  html[data-theme="light"] .hint { color: #10182b; }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  /* ---------- BARRA DE NAVEGAÇÃO DE BAIXO ---------- */
+  .bottom-nav {
+    position: fixed;
+    left: 0; right: 0; bottom: 0;
+    height: 64px;
+    display: flex;
+    background: var(--bg-panel);
+    border-top: 1px solid var(--line);
+    z-index: 500;
+    padding-bottom: env(safe-area-inset-bottom, 0);
+  }
+  .bottom-nav-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    background: none;
+    border: none;
+    color: var(--text-dim);
+    font-size: 11px;
+    font-family: inherit;
+    cursor: pointer;
+  }
+  .bottom-nav-item svg {
+    width: 22px; height: 22px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2;
+  }
+  .bottom-nav-item.active { color: var(--blue-glow); }
+  body { padding-bottom: 64px; }
+
+  /* ---------- TELA DE PERFIL / NOTIFICAÇÕES ---------- */
+  .app-screen-simple {
+    display: none;
+    position: relative;
+    z-index: 1;
+    min-height: calc(100vh - 64px);
+    padding: 24px 20px 40px;
+  }
+  .app-screen-simple.active { display: block; }
+  .app-screen-simple h2 {
+    color: #fff;
+    font-size: 22px;
+    margin-bottom: 20px;
+  }
+  html[data-theme="light"] .app-screen-simple h2 { color: #10182b; }
+
+  .profile-card {
+    background: var(--bg-panel);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 18px;
+    margin-bottom: 14px;
+  }
+  .profile-login-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid var(--line);
+    background: #fff;
+    color: #10182b;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  .profile-edit-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    margin-top: 14px;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid var(--line);
+    background: transparent;
+    color: var(--text-dim);
+    font-weight: 600;
+    font-size: 13px;
+    cursor: pointer;
+  }
+  .profile-edit-btn svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 2; }
+
+  .profile-edit-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.55);
+    z-index: 200;
+    align-items: flex-end;
+    justify-content: center;
+  }
+  .profile-edit-overlay.active { display: flex; }
+  .profile-edit-sheet {
+    width: 100%;
+    max-width: 480px;
+    background: var(--bg-panel);
+    border: 1px solid var(--line);
+    border-radius: 18px 18px 0 0;
+    padding: 22px 20px 28px;
+  }
+  .profile-edit-sheet h3 { color: #fff; font-size: 17px; margin: 0 0 18px; }
+  html[data-theme="light"] .profile-edit-sheet h3 { color: #10182b; }
+  .profile-edit-photo-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 18px;
+  }
+  .profile-edit-photo-row img {
+    width: 64px; height: 64px; border-radius: 50%; object-fit: cover;
+    border: 1px solid var(--line);
+  }
+  .profile-edit-photo-btn {
+    padding: 9px 14px;
+    border-radius: 9px;
+    border: 1px solid var(--line);
+    background: var(--blue-dim);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .profile-edit-field {
+    margin-bottom: 16px;
+  }
+  .profile-edit-field label {
+    display: block;
+    color: var(--text-dim);
+    font-size: 12px;
+    margin-bottom: 6px;
+  }
+  .profile-edit-field input[type="text"] {
+    width: 100%;
+    padding: 11px 12px;
+    border-radius: 10px;
+    border: 1px solid var(--line);
+    background: var(--bg-elev, #10182b);
+    color: #fff;
+    font-size: 14px;
+    box-sizing: border-box;
+  }
+  html[data-theme="light"] .profile-edit-field input[type="text"] { color: #10182b; background: #fff; }
+  .profile-edit-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 4px;
+  }
+  .profile-edit-actions button {
+    flex: 1;
+    padding: 12px;
+    border-radius: 10px;
+    border: none;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  .profile-edit-save { background: var(--blue-glow); color: #071019; }
+  .profile-edit-cancel { background: transparent; border: 1px solid var(--line) !important; color: var(--text-dim); }
+  .profile-edit-msg { font-size: 12px; margin-top: 10px; min-height: 16px; }
+  .profile-edit-msg.error { color: #ff6b6b; }
+  .profile-edit-msg.ok { color: #4CAF50; }
+
+  .theme-toggle-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .theme-toggle-btn {
+    background: var(--blue-dim);
+    border: none;
+    border-radius: 20px;
+    padding: 8px 14px;
+    color: var(--blue-glow);
+    font-size: 13px;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .profile-link-btn {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 14px;
+    border-radius: 12px;
+    border: 1px solid var(--line);
+    background: var(--bg-panel);
+    color: var(--text-dim);
+    font-size: 14px;
+    text-decoration: none;
+    margin-bottom: 10px;
+    cursor: pointer;
+  }
+  .profile-link-btn svg { width: 20px; height: 20px; flex-shrink: 0; }
+
+  .empty-state {
+    text-align: center;
+    color: var(--text-dim);
+    padding: 60px 20px;
+    font-size: 14px;
+  }
+
+  html, body {
+    height: 100%;
+    background: var(--bg-black);
+    overflow-y: auto;
+    overflow-x: hidden;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  }
+
+  body {
+    position: relative;
+  }
+
+  /* subtle ambient glow background */
+  .ambient {
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(circle at 50% 20%, rgba(47,109,255,0.10), transparent 55%),
+      radial-gradient(circle at 80% 90%, rgba(47,109,255,0.06), transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* faint grid texture, like a circuit board */
+  .grid-texture {
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(47,109,255,0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(47,109,255,0.035) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+    mask-image: radial-gradient(circle at 50% 40%, black 0%, transparent 70%);
+  }
+
+  /* ícones de plataforma flutuando no fundo */
+  .icon-float-layer {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .icon-float {
+    position: absolute;
+    color: rgba(91,140,255,0.09);
+  }
+
+  /* ---------- TOP BAR ---------- */
+  .topbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    padding: 0 18px;
+    z-index: 100;
+  }
+
+  .hamburger {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    background: rgba(11,15,26,0.6);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: border-color 0.25s ease, background 0.25s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .hamburger:hover, .hamburger:focus-visible {
+    border-color: var(--blue-electric);
+    background: rgba(47,109,255,0.08);
+  }
+
+  .hamburger span {
+    width: 20px;
+    height: 2px;
+    background: var(--blue-glow);
+    border-radius: 2px;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+
+  .hamburger.active span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+  .hamburger.active span:nth-child(2) {
+    opacity: 0;
+  }
+  .hamburger.active span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  /* ---------- MAIN / HOME SCREEN ---------- */
+  .home {
+    position: relative;
+    z-index: 1;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px 28px 40px;
+  }
+
+  .wordmark {
+    font-size: clamp(2.6rem, 11vw, 4.2rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    color: #ffffff;
+    text-shadow: 0 0 30px rgba(47,109,255,0.35);
+  }
+
+  .wordmark .dot {
+    color: var(--blue-electric);
+  }
+
+  .wordmark .fx {
+    color: var(--blue-glow);
+  }
+
+  .underline {
+    width: 56px;
+    height: 3px;
+    margin: 18px auto 26px;
+    background: linear-gradient(90deg, transparent, var(--blue-electric), transparent);
+    border-radius: 2px;
+  }
+
+  .hint {
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    color: var(--text-dim);
+    max-width: 260px;
+    line-height: 1.6;
+  }
+
+  .welcome-msg {
+    font-size: 0.88rem;
+    font-weight: 400;
+    color: var(--text-dim);
+    max-width: 300px;
+    line-height: 1.5;
+    margin: 4px 0 18px;
+  }
+
+  .hint strong {
+    color: var(--blue-glow);
+    font-weight: 600;
+  }
+
+  /* small pulsing arrow pointing up toward the menu */
+  .point-up {
+    position: absolute;
+    top: 78px;
+    left: 28px;
+    width: 22px;
+    height: 22px;
+    opacity: 0.55;
+    animation: floatUp 2.2s ease-in-out infinite;
+  }
+
+  .point-up svg { width: 100%; height: 100%; stroke: var(--blue-glow); }
+
+  @keyframes floatUp {
+    0%, 100% { transform: translateY(4px); opacity: 0.3; }
+    50% { transform: translateY(-2px); opacity: 0.75; }
+  }
+
+  /* ---------- OVERLAY ---------- */
+  .overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.55);
+    backdrop-filter: blur(2px);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease;
+    z-index: 150;
+  }
+
+  .overlay.active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  /* ---------- SIDE MENU ---------- */
+  .menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: min(82%, 320px);
+    background: linear-gradient(180deg, #0a0e18, #060810);
+    border-right: 1px solid var(--line);
+    transform: translateX(-100%);
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 200;
+    display: flex;
+    flex-direction: column;
+    padding: 90px 0 24px;
+  }
+
+  .menu.active {
+    transform: translateX(0);
+  }
+
+  .menu-title {
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    color: var(--text-dim);
+    padding: 0 26px;
+    margin-bottom: 18px;
+    text-transform: uppercase;
+  }
+
+  .menu-item {
+    border-top: 1px solid var(--line);
+  }
+
+  .menu-item:last-child {
+    border-bottom: 1px solid var(--line);
+  }
+
+  .menu-item-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 26px;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition: background 0.2s ease;
+  }
+
+  .menu-item-head:hover {
+    background: rgba(47,109,255,0.06);
+  }
+
+  .menu-item-head span.label {
+    color: #e7eaf2;
+    font-size: 0.98rem;
+    font-weight: 500;
+  }
+
+  .chevron {
+    width: 9px;
+    height: 9px;
+    border-right: 2px solid var(--blue-glow);
+    border-bottom: 2px solid var(--blue-glow);
+    transform: rotate(-45deg);
+    transition: transform 0.3s ease;
+  }
+
+  .menu-item.open .chevron {
+    transform: rotate(45deg);
+  }
+
+  .submenu {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease;
+    background: rgba(47,109,255,0.03);
+  }
+
+  .menu-item.open .submenu {
+    max-height: 320px;
+  }
+
+  .social-btn {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 26px 14px 46px;
+    color: #c7cde0;
+    text-decoration: none;
+    font-size: 0.92rem;
+    transition: color 0.2s ease, padding-left 0.2s ease;
+  }
+
+  .social-btn:hover {
+    color: #ffffff;
+    padding-left: 50px;
+  }
+
+  .social-icon {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .social-icon svg { width: 100%; height: 100%; }
+
+  .ig-icon { color: #e1306c; }
+  .wa-icon { color: #25d366; }
+
+  .menu-footer {
+    margin-top: auto;
+    padding: 18px 26px 6px;
+    font-size: 0.68rem;
+    color: #3c4660;
+    letter-spacing: 0.06em;
+  }
+
+  /* ---------- APPS SCREEN (full takeover, like an app store) ---------- */
+  .apps-screen {
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(180deg, #070a13, #04050a);
+    z-index: 300;
+    transform: translateX(100%);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+  }
+
+  .apps-screen.active {
+    transform: translateX(0);
+  }
+
+  .apps-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px 22px;
+    position: sticky;
+    top: 0;
+    background: rgba(7,10,19,0.9);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--line);
+    z-index: 2;
+  }
+
+  .back-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    border: 1px solid var(--line);
+    background: rgba(11,15,26,0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition: border-color 0.2s ease;
+    flex-shrink: 0;
+  }
+
+  .back-btn:hover { border-color: var(--blue-electric); }
+
+  .back-btn svg {
+    width: 18px;
+    height: 18px;
+    stroke: var(--blue-glow);
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .apps-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #ffffff;
+  }
+
+  .apps-list {
+    padding: 18px 18px 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .app-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 18px;
+    background: var(--bg-panel);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    text-decoration: none;
+    transition: border-color 0.2s ease, transform 0.15s ease, background 0.2s ease;
+  }
+
+  .app-card:hover {
+    border-color: var(--blue-electric);
+    background: rgba(47,109,255,0.06);
+    transform: translateY(-1px);
+  }
+
+  /* ---------- APP STORE NA HOME ---------- */
+  .appstore-home {
+    position: relative;
+    z-index: 1;
+    padding: 78px 18px 0;
+  }
+
+  .appstore-search-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+
+  .appstore-search-input {
+    flex: 1;
+    background: var(--bg-panel);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 11px 14px;
+    color: #fff;
+    font-size: 14px;
+    outline: none;
+  }
+
+  .appstore-search-input:focus {
+    border-color: var(--blue-electric);
+  }
+
+  .appstore-search-input::placeholder {
+    color: var(--text-dim);
+  }
+
+  .appstore-search-btn {
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+    background: var(--blue-electric);
+    border: none;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .appstore-search-btn svg {
+    width: 20px;
+    height: 20px;
+    stroke: #fff;
+  }
+
+  .app-category-row {
+    margin-bottom: 14px;
+    background: var(--bg-panel);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 14px 0 14px 14px;
+  }
+
+  .app-category-title {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #fff;
+    margin: 0 14px 10px 2px;
+  }
+
+  .app-category-scroll {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding-bottom: 2px;
+    padding-right: 14px;
+    scrollbar-width: none;
+  }
+
+  .app-category-scroll::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* ---------- ABAS DE CATEGORIA + LISTA VERTICAL ---------- */
+  .category-tabs {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 10px;
+    margin-bottom: 14px;
+    scrollbar-width: none;
+  }
+
+  .category-tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .category-tab {
+    flex: 0 0 auto;
+    padding: 9px 16px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: var(--bg-panel);
+    color: var(--text-dim);
+    font-size: 0.8rem;
+    font-weight: 600;
+    white-space: nowrap;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+  }
+
+  .category-tab.active {
+    background: var(--blue-electric);
+    border-color: var(--blue-electric);
+    color: #fff;
+  }
+
+  .apps-vertical-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-bottom: 20px;
+  }
+
+  .app-list-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 14px;
+    background: var(--bg-panel);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
+    transition: border-color 0.2s ease, background 0.2s ease;
+  }
+
+  .app-list-card:hover {
+    border-color: var(--blue-electric);
+    background: rgba(47,109,255,0.06);
+  }
+
+  .app-list-card .app-mini-icon {
+    width: 52px;
+    height: 52px;
+    flex-shrink: 0;
+  }
+
+  .app-list-card-info {
+    min-width: 0;
+    flex: 1;
+  }
+
+  .app-list-card-name {
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: #fff;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .app-list-card-sub {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    margin-top: 2px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .app-mini-card {
+    flex: 0 0 auto;
+    width: 92px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .app-mini-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 16px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--line);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    font-weight: 700;
+    color: var(--blue-glow);
+  }
+
+  .app-mini-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .app-mini-name {
+    font-size: 0.68rem;
+    color: var(--text-dim);
+    text-align: center;
+    line-height: 1.2;
+    max-width: 90px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .appstore-empty-msg {
+    color: var(--text-dim);
+    font-size: 0.8rem;
+    text-align: center;
+    padding: 20px 0;
+  }
+
+  /* ---------- MODAL DE DETALHES DO APP ---------- */
+  .app-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(2,4,10,0.75);
+    backdrop-filter: blur(2px);
+    z-index: 300;
+    display: flex;
+    align-items: flex-end;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+  }
+
+  .app-modal-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .app-modal {
+    width: 100%;
+    max-height: 82vh;
+    overflow-y: auto;
+    background: var(--bg-panel);
+    border: 1px solid var(--line);
+    border-bottom: none;
+    border-radius: 22px 22px 0 0;
+    padding: 22px 20px 28px;
+    transform: translateY(24px);
+    transition: transform 0.22s ease;
+  }
+
+  .app-modal-overlay.active .app-modal {
+    transform: translateY(0);
+  }
+
+  .app-modal-close {
+    width: 36px;
+    height: 4px;
+    border-radius: 4px;
+    background: var(--line);
+    margin: 0 auto 18px;
+  }
+
+  /* ---------- ÁREA ADMIN ESCONDIDA ---------- */
+  .admin-field-label {
+    display: block;
+    font-size: 0.78rem;
+    color: var(--text-dim);
+    margin: 14px 0 6px;
+  }
+
+  .admin-input,
+  .admin-textarea {
+    width: 100%;
+    background: var(--bg-black);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 12px 14px;
+    color: #fff;
+    font-size: 0.9rem;
+    font-family: inherit;
+  }
+
+  .admin-textarea {
+    min-height: 70px;
+    resize: vertical;
+  }
+
+  .admin-btn {
+    width: 100%;
+    margin-top: 18px;
+    padding: 13px;
+    border: none;
+    border-radius: 12px;
+    background: var(--blue-glow);
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.9rem;
+  }
+
+  .admin-btn:disabled {
+    opacity: 0.6;
+  }
+
+  .admin-msg {
+    margin-top: 10px;
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    text-align: center;
+  }
+
+  .admin-list-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--line);
+    font-size: 0.85rem;
+  }
+
+  .admin-list-item button {
+    background: none;
+    border: 1px solid var(--line);
+    color: #ff8a8a;
+    border-radius: 8px;
+    padding: 6px 10px;
+    font-size: 0.75rem;
+    flex-shrink: 0;
+  }
+
+  .app-modal-head {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+
+  .app-modal-icon {
+    width: 68px;
+    height: 68px;
+    border-radius: 18px;
+    background: var(--bg-black);
+    border: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    font-weight: 700;
+    font-size: 1.4rem;
+    color: var(--blue-glow);
+    flex-shrink: 0;
+  }
+
+  .app-modal-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .app-modal-name {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.3;
+  }
+
+  .app-modal-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 6px;
+  }
+
+  .app-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.66rem;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 20px;
+  }
+
+  .app-badge-verified {
+    background: rgba(47,109,255,0.14);
+    color: var(--blue-glow);
+  }
+
+  .app-badge-clean {
+    background: rgba(46,204,113,0.12);
+    color: #2ecc71;
+  }
+
+  .app-badge-warn {
+    background: rgba(255,180,50,0.12);
+    color: #ffb432;
+  }
+
+  .app-modal-desc-title {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 18px 0 8px;
+  }
+
+  .app-modal-desc {
+    font-size: 0.85rem;
+    color: #c3c9dd;
+    line-height: 1.6;
+    white-space: pre-line;
+  }
+
+  .app-modal-download {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    margin-top: 22px;
+    padding: 14px;
+    background: var(--blue-electric);
+    color: #fff;
+    border: none;
+    border-radius: 14px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .app-modal-download:active {
+    opacity: 0.85;
+  }
+
+  .app-modal-download:disabled {
+    opacity: 0.6;
+  }
+
+  /* ---------- POPUP DE DETALHES DO APP ---------- */
+  .app-detail-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 500;
+    display: none;
+    align-items: flex-end;
+    justify-content: center;
+  }
+
+  .app-detail-overlay.active {
+    display: flex;
+  }
+
+  .app-detail-sheet {
+    width: 100%;
+    max-width: 480px;
+    background: #0d1220;
+    border: 1px solid var(--line);
+    border-radius: 20px 20px 0 0;
+    padding: 22px 20px 28px;
+    max-height: 85vh;
+    overflow-y: auto;
+  }
+
+  .app-detail-head {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+
+  .app-detail-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 16px;
+    background: var(--bg-panel);
+    border: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    font-weight: 700;
+    font-size: 1.4rem;
+    color: var(--blue-glow);
+    flex-shrink: 0;
+  }
+
+  .app-detail-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .app-detail-name {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  .app-detail-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 4px;
+    font-size: 0.68rem;
+    color: #4ade80;
+    background: rgba(74,222,128,0.1);
+    padding: 3px 8px;
+    border-radius: 20px;
+    width: fit-content;
+  }
+
+  .app-detail-desc {
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    line-height: 1.6;
+    margin-bottom: 20px;
+    white-space: pre-line;
+  }
+
+  .app-detail-download-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 14px;
+    background: var(--blue-electric);
+    color: #fff;
+    border: none;
+    border-radius: 14px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .app-detail-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-panel);
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    cursor: pointer;
+    color: var(--text-dim);
+  }
+
+  .app-icon {
+    width: 46px;
+    height: 46px;
+    border-radius: 12px;
+    background: linear-gradient(160deg, var(--blue-dim), #0b0f1a);
+    border: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-weight: 800;
+    font-size: 1.1rem;
+    color: var(--blue-glow);
+  }
+
+  .app-info { flex: 1; min-width: 0; }
+
+  .app-name {
+    font-size: 0.98rem;
+    font-weight: 600;
+    color: #e7eaf2;
+  }
+
+  .app-sub {
+    font-size: 0.72rem;
+    color: var(--text-dim);
+    margin-top: 2px;
+  }
+
+  .app-arrow {
+    width: 9px;
+    height: 9px;
+    border-right: 2px solid var(--blue-glow);
+    border-bottom: 2px solid var(--blue-glow);
+    transform: rotate(-45deg);
+    flex-shrink: 0;
+    opacity: 0.7;
+  }
+  .app-icon-img {
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .app-icon-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* ---------- CAIXA DE COMENTÁRIOS ---------- */
+  .comments-wrap {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 360px;
+    margin-top: 30px;
+    padding: 0 8px;
+  }
+
+  .comment-box {
+    width: 100%;
+    background: var(--bg-panel);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 12px 16px;
+    color: #e7eaf2;
+    font-size: 0.92rem;
+    font-family: inherit;
+    resize: none;
+    outline: none;
+    transition: border-color 0.2s ease;
+  }
+
+  .comment-box::placeholder {
+    color: var(--text-dim);
+  }
+
+  .comment-box:focus {
+    border-color: var(--blue-electric);
+  }
+
+  .comment-name-row {
+    display: none;
+    margin-top: 10px;
+    gap: 8px;
+  }
+
+  .comment-name-row.active {
+    display: flex;
+  }
+
+  .comment-name-input {
+    flex: 1;
+    background: var(--bg-panel);
+    border: 1px solid var(--blue-electric);
+    border-radius: 12px;
+    padding: 10px 14px;
+    color: #e7eaf2;
+    font-size: 0.88rem;
+    font-family: inherit;
+    outline: none;
+  }
+
+  .comment-send-btn {
+    background: var(--blue-electric);
+    border: none;
+    border-radius: 12px;
+    padding: 0 18px;
+    color: #fff;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .comments-list {
+    margin-top: 18px;
+    width: 100%;
+    max-height: 30vh;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-right: 2px;
+  }
+
+  .comments-list::-webkit-scrollbar { width: 4px; }
+  .comments-list::-webkit-scrollbar-thumb { background: var(--line); border-radius: 4px; }
+
+  .comment-item {
+    background: rgba(47,109,255,0.05);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 10px 14px;
+    text-align: left;
+  }
+
+  .comment-item .nome {
+    font-size: 0.76rem;
+    font-weight: 700;
+    color: var(--blue-glow);
+  }
+
+  .comment-item .texto {
+    font-size: 0.85rem;
+    color: #c7cde0;
+    margin-top: 2px;
+    word-break: break-word;
+  }
+
+  /* ---------- CONTADOR DE VISUALIZAÇÕES ---------- */
+  .view-counter {
+    position: fixed;
+    bottom: 12px;
+    right: 14px;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 10px;
+    background: rgba(11,15,26,0.7);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    font-size: 0.68rem;
+    color: var(--text-dim);
+    letter-spacing: 0.04em;
+  }
+
+  .view-counter svg {
+    width: 12px;
+    height: 12px;
+    stroke: var(--blue-glow);
+    fill: none;
+    stroke-width: 2;
+  }
+
+  .view-counter span {
+    color: var(--blue-glow);
+    font-weight: 700;
+  }
+
+  /* ---------- AVISO DE COMENTÁRIO PUBLICADO ---------- */
+  .success-toast {
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
+    background: #0d2e1a;
+    color: #8aff9e;
+    border: 1px solid #2f9e52;
+    padding: 12px 16px;
+    border-radius: 12px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    text-align: center;
+    z-index: 9999;
+    transform: translateY(120%);
+    opacity: 0;
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease;
+  }
+
+  .success-toast.show {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  /* ---------- STREAMING ---------- */
+  .streaming-search-row {
+    display: flex;
+    gap: 8px;
+    padding: 14px 18px 0;
+  }
+
+  .streaming-search-input {
+    flex: 1;
+    background: var(--bg-panel);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 11px 14px;
+    color: #e7eaf2;
+    font-size: 0.9rem;
+    font-family: inherit;
+    outline: none;
+  }
+
+  .streaming-search-input:focus {
+    border-color: var(--blue-electric);
+  }
+
+  .streaming-search-btn {
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+    background: var(--blue-electric);
+    border: none;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .streaming-search-btn svg {
+    width: 20px;
+    height: 20px;
+    stroke: #fff;
+  }
+
+  .streaming-subscribe-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin: 12px 18px 0;
+    padding: 10px 16px;
+    background: #FF0000;
+    color: #fff;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 12px;
+  }
+
+  .streaming-subscribe-btn:active {
+    opacity: 0.85;
+  }
+
+  .streaming-player-wrap {
+    margin: 14px 18px 0;
+    border-radius: 14px;
+    overflow: hidden;
+    background: #000;
+    position: relative;
+    width: calc(100% - 36px);
+    padding-top: 56.25%; /* proporção 16:9, funciona em qualquer navegador */
+    display: none;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+  }
+
+  .streaming-player-wrap.active {
+    display: block;
+  }
+
+  .streaming-player-wrap iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+
+  .streaming-section-title {
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    padding: 22px 18px 12px;
+  }
+
+  .streaming-results {
+    padding: 0 14px 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .streaming-result-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--bg-panel);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    overflow: hidden;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition: border-color 0.2s ease, transform 0.15s ease;
+  }
+
+  .streaming-result-card:active {
+    transform: scale(0.98);
+    border-color: var(--blue-electric);
+  }
+
+  .streaming-result-thumb {
+    width: 100%;
+    position: relative;
+    padding-top: 56.25%;
+    background: #000;
+    overflow: hidden;
+  }
+
+  .streaming-result-thumb img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .streaming-play-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(180deg, rgba(0,0,0,0) 50%, rgba(0,0,0,0.55) 100%);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+
+  .streaming-result-card:active .streaming-play-overlay {
+    opacity: 1;
+  }
+
+  .streaming-play-overlay svg {
+    width: 42px;
+    height: 42px;
+    fill: #fff;
+    filter: drop-shadow(0 2px 6px rgba(0,0,0,0.5));
+  }
+
+  .streaming-result-info {
+    padding: 12px 14px 14px;
+  }
+
+  .streaming-result-title {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #f0f2f8;
+    line-height: 1.35;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .streaming-result-channel {
+    font-size: 0.74rem;
+    color: var(--text-dim);
+    margin-top: 5px;
+  }
+
+  .streaming-empty-msg {
+    text-align: center;
+    color: var(--text-dim);
+    font-size: 0.82rem;
+    padding: 30px 20px;
+  }
+</style>
+<!-- Firebase (login com Google + histórico de downloads) -->
+<script src="https://www.gstatic.com/firebasejs/10.13.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.1/firebase-database-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.1/firebase-storage-compat.js"></script>
+</head>
+<body>
+
+  <div class="ambient"></div>
+  <div class="grid-texture"></div>
+  <div class="icon-float-layer" id="iconFloatLayer" aria-hidden="true"></div>
+
+  <div class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="Abrir menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+
+  <section class="appstore-home" id="homeScreenPart1">
+    <div class="appstore-search-row">
+      <input
+        id="appsSearchInput"
+        class="appstore-search-input"
+        type="text"
+        placeholder="Buscar apps (ex: câmera, editor, jogo)"
+      >
+      <button class="appstore-search-btn" id="appsSearchBtn" aria-label="Buscar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+      </button>
+    </div>
+
+    <div class="category-tabs" id="categoryTabs">
+      <!-- Preenchido automaticamente com as abas de categoria -->
+    </div>
+
+    <div id="appsCategoriesWrap" class="apps-vertical-list">
+      <!-- Preenchido automaticamente com os apps da categoria selecionada -->
+    </div>
+  </section>
+
+  <main class="home" id="homeScreenPart2">
+    <div class="point-up" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 19V5M5 12l7-7 7 7"/>
+      </svg>
+    </div>
+
+    <h1 class="wordmark">islan<span class="dot">.</span><span class="fx">fx</span><span class="sr-only"> – Baixar Jogos e Apps Grátis para Android</span></h1>
+    <div class="underline"></div>
+    <h2 class="welcome-msg">Bem-vindo à sua loja de aplicativos grátis. Navegue, baixe e veja informações de cada app aqui.</h2>
+    <p class="hint">PARA VER AS OPÇÕES DO SITE<br><strong>ABRA O MENU</strong><br>OBRIGADO</p>
+
+    <div class="comments-wrap">
+      <textarea
+        id="commentText"
+        class="comment-box"
+        rows="2"
+        placeholder="Deixe seu comentário..."
+        maxlength="300"
+      ></textarea>
+
+      <div class="comment-name-row" id="nameRow">
+        <input
+          id="commentName"
+          class="comment-name-input"
+          type="text"
+          placeholder="Seu nome"
+          maxlength="40"
+        >
+        <button class="comment-send-btn" id="sendBtn">Enviar</button>
+      </div>
+
+      <div class="comments-list" id="commentsList">
+        <!-- Comentários carregados automaticamente do Firebase -->
+      </div>
+    </div>
+  </main>
+
+  <!-- ---------- TELA DE NOTIFICAÇÕES ---------- -->
+  <section class="app-screen-simple" id="notificationsScreen">
+    <h2>Notificações</h2>
+    <div class="empty-state" id="notificationsEmpty">
+      Nenhuma notificação por enquanto.<br>Quando sair um app novo, ele aparece aqui.
+    </div>
+  </section>
+
+  <!-- ---------- TELA DE PERFIL ---------- -->
+  <section class="app-screen-simple" id="profileScreen">
+    <h2>Perfil</h2>
+
+    <div class="profile-card" id="profileLoginCard">
+      <button class="profile-login-btn" id="googleLoginBtn">
+        <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3c-1.6 4.6-6 8-11.3 8-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34.6 6.1 29.6 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.7-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.6 15.9 18.9 13 24 13c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34.6 6.1 29.6 4 24 4c-7.6 0-14.1 4.3-17.7 10.7z"/><path fill="#4CAF50" d="M24 44c5.5 0 10.4-1.9 14.2-5.1l-6.5-5.5c-2 1.5-4.6 2.4-7.7 2.4-5.3 0-9.7-3.4-11.3-8.1l-6.5 5C9.9 39.7 16.4 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.3-2.2 4.2-4.1 5.5l6.5 5.5C39.9 36.4 44 30.9 44 24c0-1.3-.1-2.7-.4-3.5z"/></svg>
+        Entrar com Google
+      </button>
+    </div>
+
+    <div class="profile-card" id="profileUserCard" style="display:none;">
+      <div style="display:flex; align-items:center; gap:12px;">
+        <img id="profileUserPhoto" src="" alt="" style="width:48px; height:48px; border-radius:50%;">
+        <div>
+          <div id="profileUserName" style="color:#fff; font-weight:600; font-size:15px;"></div>
+          <button id="profileLogoutBtn" style="background:none; border:none; color: var(--text-dim); font-size:12px; padding:0; margin-top:4px; cursor:pointer; text-decoration:underline;">Sair da conta</button>
+        </div>
+      </div>
+      <button class="profile-edit-btn" id="profileEditBtn">
+        <svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4z"/></svg>
+        Editar perfil
+      </button>
+    </div>
+
+    <div class="profile-card" id="profileHistoryCard" style="display:none;">
+      <div style="color:#fff; font-weight:600; font-size:14px; margin-bottom:10px;">Histórico de downloads</div>
+      <div id="profileHistoryList" class="empty-state" style="padding: 20px 0;">Nenhum download ainda.</div>
+    </div>
+
+    <div class="profile-card theme-toggle-row">
+      <span style="color: var(--text-dim); font-size: 14px;">Aparência</span>
+      <button class="theme-toggle-btn" id="themeToggleBtn">Modo claro</button>
+    </div>
+
+    <a class="profile-link-btn" href="https://wa.me/5582987377198" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 9V5a2 2 0 00-2-2H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7a2 2 0 00-2-2h-4a2 2 0 00-2 2z"/></svg>
+      Suporte / Enviar sugestão de app
+    </a>
+    <a class="profile-link-btn" href="https://www.instagram.com/islanaleatorio?igsh=N2JvbzF4OXdnb21y" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/></svg>
+      Instagram
+    </a>
+    <a class="profile-link-btn" href="https://www.youtube.com/@islanaleatorio" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="M10 9l5 3-5 3z"/></svg>
+      YouTube
+    </a>
+    <a class="profile-link-btn" href="https://apkpure.com/p/app.netlify.islan_fx.twa" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l9 5v10l-9 5-9-5V7z"/></svg>
+      Nosso app no APKPure
+    </a>
+  </section>
+
+  <!-- ---------- MODAL: EDITAR PERFIL ---------- -->
+  <div class="profile-edit-overlay" id="profileEditOverlay">
+    <div class="profile-edit-sheet">
+      <h3>Editar perfil</h3>
+
+      <div class="profile-edit-photo-row">
+        <img id="profileEditPhotoPreview" src="" alt="">
+        <button class="profile-edit-photo-btn" id="profileEditPhotoBtn" type="button">Trocar foto</button>
+        <input type="file" id="profileEditPhotoInput" accept="image/*" style="display:none;">
+      </div>
+
+      <div class="profile-edit-field">
+        <label for="profileEditNameInput">Nome</label>
+        <input type="text" id="profileEditNameInput" maxlength="60" placeholder="Seu nome">
+      </div>
+
+      <div class="profile-edit-actions">
+        <button class="profile-edit-cancel" id="profileEditCancelBtn" type="button">Cancelar</button>
+        <button class="profile-edit-save" id="profileEditSaveBtn" type="button">Salvar</button>
+      </div>
+      <div class="profile-edit-msg" id="profileEditMsg"></div>
+    </div>
+  </div>
+
+  <!-- ---------- BARRA DE NAVEGAÇÃO DE BAIXO ---------- -->
+  <nav class="bottom-nav" id="bottomNav">
+    <button class="bottom-nav-item active" id="navHomeBtn" data-screen="home">
+      <svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>
+      Início
+    </button>
+    <button class="bottom-nav-item" id="navNotifBtn" data-screen="notifications">
+      <svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 10-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 01-3.4 0"/></svg>
+      Notificações
+    </button>
+    <button class="bottom-nav-item" id="navProfileBtn" data-screen="profile">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg>
+      Perfil
+    </button>
+  </nav>
+
+  <div class="overlay" id="overlay"></div>
+
+  <nav class="menu" id="menu" aria-hidden="true">
+    <div class="menu-title">Menu</div>
+
+    <div class="menu-item" id="socialItem">
+      <div class="menu-item-head" id="socialHead">
+        <span class="label">Redes sociais</span>
+        <span class="chevron"></span>
+      </div>
+      <div class="submenu" id="socialSubmenu">
+        <!-- Preenchido automaticamente a partir de conteudo.js -->
+      </div>
+    </div>
+
+    <div class="menu-item" id="streamingMenuItem">
+      <div class="menu-item-head" id="streamingMenuHead">
+        <span class="label">Vídeos do YouTube</span>
+        <span class="app-arrow" style="transform: rotate(-45deg);"></span>
+      </div>
+    </div>
+
+    <div class="menu-footer">islan.fx</div>
+  </nav>
+
+  <section class="apps-screen" id="streamingScreen" aria-hidden="true">
+    <div class="apps-header">
+      <button class="back-btn" id="streamingBackBtn" aria-label="Voltar">
+        <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      </button>
+      <span class="apps-title">Vídeos do YouTube</span>
+    </div>
+
+    <div class="streaming-search-row">
+      <input
+        id="streamingSearchInput"
+        class="streaming-search-input"
+        type="text"
+        placeholder="Pesquisar vídeos..."
+      >
+      <button class="streaming-search-btn" id="streamingSearchBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"/>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+      </button>
+    </div>
+
+    <a
+      class="streaming-subscribe-btn"
+      href="https://www.youtube.com/@islanaleatorio?sub_confirmation=1"
+      target="_blank"
+      rel="noopener"
+    >
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M21.8 8.001a2.75 2.75 0 00-1.94-1.94C18.1 5.5 12 5.5 12 5.5s-6.1 0-7.86.56A2.75 2.75 0 002.2 8c-.56 1.86-.56 4-.56 4s0 2.14.56 4a2.75 2.75 0 001.94 1.94c1.76.56 7.86.56 7.86.56s6.1 0 7.86-.56A2.75 2.75 0 0021.8 16c.56-1.86.56-4 .56-4s0-2.14-.56-4zM9.75 15.02V8.98L15.5 12l-5.75 3.02z"/></svg>
+      Inscreva-se no canal @islanaleatorio
+    </a>
+
+    <div class="streaming-player-wrap" id="streamingPlayerWrap">
+      <!-- O player (iframe) é inserido aqui quando um vídeo é escolhido -->
+    </div>
+
+    <div class="streaming-section-title" id="streamingSectionTitle">Vídeos do canal</div>
+
+    <div class="streaming-results" id="streamingResults">
+      <!-- Resultados da busca aparecem aqui -->
+    </div>
+  </section>
+
+  <div class="view-counter" id="viewCounter">
+    <svg viewBox="0 0 24 24"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg>
+    <span id="viewCount">--</span>
+  </div>
+
+  <div class="success-toast" id="successToast">Comentário publicado, obrigado!</div>
+
+  <div class="app-detail-overlay" id="appDetailOverlay">
+    <div class="app-detail-sheet">
+      <button class="app-detail-close" id="appDetailClose" aria-label="Fechar">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+
+      <div class="app-detail-head">
+        <div class="app-detail-icon" id="appDetailIcon">?</div>
+        <div>
+          <div class="app-detail-name" id="appDetailName">—</div>
+          <div class="app-detail-badge">
+            <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><path d="M12 1L3 5v6c0 5.5 3.8 10.7 9 12 5.2-1.3 9-6.5 9-12V5l-9-4z"/></svg>
+            Código aberto · F-Droid
+          </div>
+        </div>
+      </div>
+
+      <div class="app-detail-desc" id="appDetailDesc">Carregando descrição...</div>
+
+      <button class="app-detail-download-btn" id="appDetailDownloadBtn">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 21h16"/></svg>
+        Baixar APK
+      </button>
+    </div>
+  </div>
+
+
+  <div class="app-modal-overlay" id="appModalOverlay">
+    <div class="app-modal" id="appModal">
+      <div class="app-modal-close"></div>
+      <div class="app-modal-head">
+        <div class="app-modal-icon" id="appModalIcon"></div>
+        <div>
+          <div class="app-modal-name" id="appModalName"></div>
+          <div class="app-modal-badges" id="appModalBadges"></div>
+        </div>
+      </div>
+      <div class="app-modal-desc-title">Descrição</div>
+      <div class="app-modal-desc" id="appModalDesc"></div>
+      <button class="app-modal-download" id="appModalDownloadBtn">Baixar APK</button>
+    </div>
+  </div>
+
+  <!-- Painel escondido: só abre acessando o site com #admin no final do link -->
+  <div class="app-modal-overlay" id="adminOverlay">
+    <div class="app-modal" id="adminModal">
+      <div class="app-modal-close"></div>
+
+      <div id="adminLoginBox">
+        <div class="app-modal-name" style="margin-bottom: 4px;">Área admin</div>
+        <label class="admin-field-label">Senha</label>
+        <input type="password" class="admin-input" id="adminPasswordInput" placeholder="Digite a senha">
+        <button class="admin-btn" id="adminLoginBtn">Entrar</button>
+        <div class="admin-msg" id="adminLoginMsg"></div>
+      </div>
+
+      <div id="adminPanelBox" style="display:none;">
+
+        <!-- Menu inicial: escolher entre adicionar ou editar -->
+        <div id="adminMenuBox">
+          <div class="app-modal-name" style="margin-bottom: 14px;">Área admin</div>
+          <button class="admin-btn" id="adminMenuAddBtn" style="width:100%; margin-bottom:10px;">Adicionar novo app/jogo</button>
+          <button class="admin-btn" id="adminMenuEditBtn" style="width:100%;">Editar app já adicionado</button>
+        </div>
+
+        <!-- Lista de apps adicionados manualmente, só pra escolher qual editar -->
+        <div id="adminListBox" style="display:none;">
+          <button class="admin-btn" id="adminListVoltarBtn" style="background:none; color:var(--text-dim); margin-bottom:12px;">&larr; Voltar</button>
+          <div class="app-modal-name" style="margin-bottom: 10px;">Escolha um app pra editar</div>
+          <div id="adminListaApps"></div>
+        </div>
+
+        <!-- Formulário: usado tanto pra adicionar quanto pra editar -->
+        <div id="adminFormBox" style="display:none;">
+          <button class="admin-btn" id="adminFormVoltarBtn" style="background:none; color:var(--text-dim); margin-bottom:12px;">&larr; Voltar</button>
+          <div class="app-modal-name" style="margin-bottom: 12px;" id="adminFormTitulo">Adicionar app manualmente</div>
+
+          <label class="admin-field-label">Nome do app</label>
+          <input type="text" class="admin-input" id="adminAppNome" placeholder="Ex: WhatsApp">
+
+          <label class="admin-field-label">Descrição</label>
+          <textarea class="admin-textarea" id="adminAppDesc" placeholder="Breve descrição do app"></textarea>
+
+          <label class="admin-field-label">Link do ícone (imagem)</label>
+          <input type="text" class="admin-input" id="adminAppIcone" placeholder="https://...">
+
+          <label class="admin-field-label">Link do APK (ex: MediaFire)</label>
+          <input type="text" class="admin-input" id="adminAppLink" placeholder="https://...">
+
+          <button class="admin-btn" id="adminSalvarBtn">Adicionar app</button>
+          <button class="admin-btn" id="adminRemoverBtn" style="display:none; background:none; color:#ff8a8a; margin-top:8px;">Remover este app</button>
+          <div class="admin-msg" id="adminSalvarMsg"></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+<script>
+  /* ---------- CAPTURADOR DE ERROS (temporário, pra diagnóstico) ----------
+     Se algo der erro em qualquer parte do site, aparece um aviso vermelho
+     na tela mostrando a mensagem, em vez de travar tudo em silêncio.
+  ------------------------------------------------------------------------ */
+  function mostrarErroDebug(msg) {
+    try {
+      const div = document.createElement('div');
+      div.style.cssText = 'position:fixed;top:8px;left:8px;right:8px;background:#3a0d0d;color:#ff8a8a;padding:10px;border-radius:8px;font-size:0.68rem;z-index:99999;border:1px solid #aa3333;word-break:break-word;max-height:35vh;overflow:auto;';
+      div.textContent = 'ERRO JS: ' + msg;
+      document.body.appendChild(div);
+    } catch (e) { /* nada a fazer */ }
+  }
+  window.addEventListener('error', function (e) {
+    mostrarErroDebug((e.message || 'erro desconhecido') + ' — linha ' + e.lineno);
+  });
+  window.addEventListener('unhandledrejection', function (e) {
+    const motivo = e.reason && e.reason.message ? e.reason.message : e.reason;
+    mostrarErroDebug('Promise rejeitada: ' + motivo);
+  });
+
+  /* ---------- NAVEGAÇÃO DE BAIXO (Início / Notificações / Perfil) ---------- */
+  (function () {
+    const navBtns = document.querySelectorAll('.bottom-nav-item');
+    const homePart1 = document.getElementById('homeScreenPart1');
+    const homePart2 = document.getElementById('homeScreenPart2');
+    const notifScreen = document.getElementById('notificationsScreen');
+    const profileScreen = document.getElementById('profileScreen');
+
+    function showScreen(name) {
+      homePart1.style.display = name === 'home' ? '' : 'none';
+      homePart2.style.display = name === 'home' ? '' : 'none';
+      notifScreen.classList.toggle('active', name === 'notifications');
+      profileScreen.classList.toggle('active', name === 'profile');
+      navBtns.forEach(b => b.classList.toggle('active', b.dataset.screen === name));
+      window.scrollTo(0, 0);
+    }
+
+    navBtns.forEach(btn => {
+      btn.addEventListener('click', () => showScreen(btn.dataset.screen));
+    });
+  })();
+
+  /* ---------- MODO CLARO / ESCURO ---------- */
+  (function () {
+    const btn = document.getElementById('themeToggleBtn');
+    const saved = localStorage.getItem('islanfx-theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', saved);
+    if (btn) btn.textContent = saved === 'dark' ? 'Modo claro' : 'Modo escuro';
+
+    if (btn) {
+      btn.addEventListener('click', () => {
+        const current = document.documentElement.getAttribute('data-theme');
+        const next = current === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        localStorage.setItem('islanfx-theme', next);
+        btn.textContent = next === 'dark' ? 'Modo claro' : 'Modo escuro';
+      });
+    }
+  })();
+
+  /* ---------- FIREBASE: LOGIN COM GOOGLE + HISTÓRICO DE DOWNLOADS ---------- */
+  const firebaseConfig = {
+    apiKey: "AIzaSyCUYxp9mEm9TZxoY_s2fRwoun3jOJpXdqM",
+    authDomain: "islanfx.firebaseapp.com",
+    databaseURL: "https://islanfx-default-rtdb.firebaseio.com",
+    projectId: "islanfx",
+    storageBucket: "islanfx.firebasestorage.app",
+    messagingSenderId: "1038745994712",
+    appId: "1:1038745994712:web:8b8d384aff7d9f0465dead"
+  };
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+  const dbFirestore = firebase.firestore();
+  const dbRealtime = firebase.database();
+  const dbStorage = firebase.storage();
+  const googleProvider = new firebase.auth.GoogleAuthProvider();
+
+  const loginCard = document.getElementById('profileLoginCard');
+  const userCard = document.getElementById('profileUserCard');
+  const historyCard = document.getElementById('profileHistoryCard');
+  const historyList = document.getElementById('profileHistoryList');
+
+  const FOTO_PADRAO = 'data:image/svg+xml;utf8,' + encodeURIComponent(
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><rect width="48" height="48" rx="24" fill="%232a3550"/><circle cx="24" cy="19" r="8" fill="%237c8bab"/><path d="M8 42c0-9 7-14 16-14s16 5 16 14" fill="%237c8bab"/></svg>'
+  );
+
+  function renderLoggedIn(user) {
+    loginCard.style.display = 'none';
+    userCard.style.display = 'block';
+    historyCard.style.display = 'block';
+    document.getElementById('profileUserPhoto').src = user.photoURL || FOTO_PADRAO;
+    document.getElementById('profileUserName').textContent = user.displayName || user.email || 'Usuário';
+    carregarHistorico(user.uid);
+
+    // Se o usuário já personalizou nome/foto por aqui antes, usa isso
+    // no lugar dos dados padrão da conta Google.
+    dbFirestore.collection('usuarios').doc(user.uid).get().then(doc => {
+      if (!doc.exists) return;
+      const dados = doc.data();
+      if (dados.foto) document.getElementById('profileUserPhoto').src = dados.foto;
+      if (dados.nome) document.getElementById('profileUserName').textContent = dados.nome;
+    }).catch(err => console.error('Erro ao buscar perfil salvo:', err));
+  }
+
+  function renderLoggedOut() {
+    loginCard.style.display = 'block';
+    userCard.style.display = 'none';
+    historyCard.style.display = 'none';
+  }
+
+  // Salva um app no histórico do usuário logado (chamar isso quando a pessoa
+  // tocar em "Baixar"). Aceita tanto um nome simples (string) quanto o objeto
+  // completo do app -- nesse segundo caso, guarda também ícone/pacote/link
+  // pra dar pra montar a aba "Usados normalmente" sem precisar rebuscar tudo.
+  window.registrarDownloadNoHistorico = function (app) {
+    const user = auth.currentUser;
+    if (!user || !app) return;
+
+    const nomeApp = typeof app === 'string' ? app : (app.name || app.localizedName || '');
+    if (!nomeApp) return;
+
+    const registro = { nome: nomeApp, data: firebase.firestore.FieldValue.serverTimestamp() };
+    if (typeof app === 'object') {
+      const pkg = app.packageName || app.package || '';
+      const icone = app.icon || app.iconUrl || '';
+      if (pkg) registro.packageName = pkg;
+      if (icone) registro.icone = icone;
+      if (app.manual) registro.manual = true;
+      if (app.apkUrl) registro.apkUrl = app.apkUrl;
+    }
+
+    dbFirestore.collection('usuarios').doc(user.uid).collection('downloads').add(registro)
+      .catch(err => console.error('Erro ao salvar histórico:', err));
+  };
+
+  function carregarHistorico(uid) {
+    historyList.textContent = 'Carregando...';
+    dbFirestore.collection('usuarios').doc(uid).collection('downloads')
+      .orderBy('data', 'desc').limit(20).get()
+      .then(snapshot => {
+        if (snapshot.empty) {
+          historyList.textContent = 'Nenhum download ainda.';
+          return;
+        }
+        historyList.className = '';
+        historyList.innerHTML = '';
+        snapshot.forEach(doc => {
+          const item = document.createElement('div');
+          item.style.cssText = 'padding:10px 0; border-bottom:1px solid var(--line); color: var(--text-dim); font-size:13px;';
+          item.textContent = doc.data().nome;
+          historyList.appendChild(item);
+        });
+      })
+      .catch(err => {
+        console.error('Erro ao carregar histórico:', err);
+        historyList.textContent = 'Não foi possível carregar o histórico.';
+      });
+  }
+
+  // Mensagem de erro amigável a partir do código de erro do Firebase Auth.
+  function mensagemErroLogin(err) {
+    switch (err.code) {
+      case 'auth/unauthorized-domain':
+        return 'Este endereço do site ainda não está autorizado no Firebase Authentication (Authorized domains).';
+      case 'auth/popup-blocked':
+        return 'O navegador bloqueou a janela de login. Tentando de outro jeito...';
+      case 'auth/popup-closed-by-user':
+      case 'auth/cancelled-popup-request':
+        return null; // usuário cancelou, não precisa mostrar erro
+      case 'auth/network-request-failed':
+        return 'Sem conexão com a internet no momento do login.';
+      default:
+        return 'Login com Google falhou (' + err.code + '): ' + err.message;
+    }
+  }
+
+  // Captura resultado de um eventual login por redirect (usado só como
+  // fallback quando o popup é bloqueado pelo navegador).
+  auth.getRedirectResult().catch(err => {
+    console.error('Erro ao voltar do login com Google (redirect):', err);
+    const msg = mensagemErroLogin(err);
+    if (msg) alert(msg);
+  });
+
+  auth.onAuthStateChanged(user => {
+    if (user) renderLoggedIn(user);
+    else renderLoggedOut();
+    if (categoriaAtivaId === 'usados') renderizarCategoriaAtiva();
+  });
+
+  const loginBtn = document.getElementById('googleLoginBtn');
+  if (loginBtn) {
+    loginBtn.addEventListener('click', () => {
+      loginBtn.disabled = true;
+      const textoOriginal = loginBtn.innerHTML;
+      loginBtn.style.opacity = '0.6';
+
+      // signInWithPopup é usado em vez de signInWithRedirect porque o
+      // Chrome moderno (M115+) bloqueia o iframe entre domínios que o
+      // redirect usa quando authDomain é diferente do domínio do site
+      // (islanfx.firebaseapp.com vs o domínio real). Isso fazia o login
+      // "não fazer nada" sem erro nenhum. O popup funciona normalmente
+      // dentro da TWA (Custom Tab do Chrome).
+      auth.signInWithPopup(googleProvider)
+        .catch(err => {
+          console.error('Erro no login com Google (popup):', err);
+          if (err.code === 'auth/popup-blocked' || err.code === 'auth/operation-not-supported-in-this-environment') {
+            // Se o popup for bloqueado, cai pro redirect como reserva.
+            return auth.signInWithRedirect(googleProvider).catch(err2 => {
+              const msg = mensagemErroLogin(err2);
+              if (msg) alert(msg);
+            });
+          }
+          const msg = mensagemErroLogin(err);
+          if (msg) alert(msg);
+        })
+        .finally(() => {
+          loginBtn.disabled = false;
+          loginBtn.style.opacity = '1';
+          loginBtn.innerHTML = textoOriginal;
+        });
+    });
+  }
+
+  /* ---------- EDITAR PERFIL (nome + foto) ---------- */
+  const editOverlay = document.getElementById('profileEditOverlay');
+  const editBtn = document.getElementById('profileEditBtn');
+  const editCancelBtn = document.getElementById('profileEditCancelBtn');
+  const editSaveBtn = document.getElementById('profileEditSaveBtn');
+  const editNameInput = document.getElementById('profileEditNameInput');
+  const editPhotoPreview = document.getElementById('profileEditPhotoPreview');
+  const editPhotoBtn = document.getElementById('profileEditPhotoBtn');
+  const editPhotoInput = document.getElementById('profileEditPhotoInput');
+  const editMsg = document.getElementById('profileEditMsg');
+
+  let arquivoFotoBase64 = null;
+
+  // Reduz a foto escolhida pra uma imagem pequena (JPEG, lado máx. 200px)
+  // e devolve como base64, pronta pra salvar direto no Firestore -- assim
+  // não depende do Firebase Storage (que não está configurado no projeto).
+  function comprimirImagem(file, ladoMax = 200, qualidade = 0.8) {
+    return new Promise((resolve, reject) => {
+      const leitor = new FileReader();
+      leitor.onload = () => {
+        const img = new Image();
+        img.onload = () => {
+          let { width, height } = img;
+          if (width > height && width > ladoMax) {
+            height = Math.round(height * (ladoMax / width));
+            width = ladoMax;
+          } else if (height >= width && height > ladoMax) {
+            width = Math.round(width * (ladoMax / height));
+            height = ladoMax;
+          }
+          const canvas = document.createElement('canvas');
+          canvas.width = width;
+          canvas.height = height;
+          canvas.getContext('2d').drawImage(img, 0, 0, width, height);
+          resolve(canvas.toDataURL('image/jpeg', qualidade));
+        };
+        img.onerror = () => reject(new Error('Não foi possível ler a imagem.'));
+        img.src = leitor.result;
+      };
+      leitor.onerror = () => reject(new Error('Não foi possível ler o arquivo.'));
+      leitor.readAsDataURL(file);
+    });
+  }
+
+  function abrirEdicaoPerfil() {
+    const user = auth.currentUser;
+    if (!user) return;
+    arquivoFotoBase64 = null;
+    editNameInput.value = document.getElementById('profileUserName').textContent || user.displayName || '';
+    editPhotoPreview.src = document.getElementById('profileUserPhoto').src || FOTO_PADRAO;
+    editMsg.textContent = '';
+    editMsg.className = 'profile-edit-msg';
+    editOverlay.classList.add('active');
+  }
+
+  function fecharEdicaoPerfil() {
+    editOverlay.classList.remove('active');
+  }
+
+  if (editBtn) editBtn.addEventListener('click', abrirEdicaoPerfil);
+  if (editCancelBtn) editCancelBtn.addEventListener('click', fecharEdicaoPerfil);
+  editOverlay.addEventListener('click', e => {
+    if (e.target === editOverlay) fecharEdicaoPerfil();
+  });
+
+  if (editPhotoBtn) {
+    editPhotoBtn.addEventListener('click', () => editPhotoInput.click());
+  }
+
+  if (editPhotoInput) {
+    editPhotoInput.addEventListener('change', async () => {
+      const file = editPhotoInput.files && editPhotoInput.files[0];
+      if (!file) return;
+      if (!file.type.startsWith('image/')) {
+        editMsg.textContent = 'Escolha um arquivo de imagem.';
+        editMsg.className = 'profile-edit-msg error';
+        return;
+      }
+      if (file.size > 8 * 1024 * 1024) {
+        editMsg.textContent = 'Imagem muito grande (máx. 8MB).';
+        editMsg.className = 'profile-edit-msg error';
+        return;
+      }
+      try {
+        editMsg.textContent = 'Preparando imagem...';
+        editMsg.className = 'profile-edit-msg';
+        const dataUrl = await comprimirImagem(file);
+        arquivoFotoBase64 = dataUrl;
+        editPhotoPreview.src = dataUrl;
+        editMsg.textContent = '';
+      } catch (err) {
+        console.error('Erro ao processar imagem:', err);
+        editMsg.textContent = 'Não foi possível ler essa imagem.';
+        editMsg.className = 'profile-edit-msg error';
+      }
+    });
+  }
+
+  if (editSaveBtn) {
+    editSaveBtn.addEventListener('click', async () => {
+      const user = auth.currentUser;
+      if (!user) return;
+
+      const novoNome = editNameInput.value.trim();
+      editSaveBtn.disabled = true;
+      editCancelBtn.disabled = true;
+      editMsg.textContent = 'Salvando...';
+      editMsg.className = 'profile-edit-msg';
+
+      try {
+        await user.updateProfile({
+          displayName: novoNome || user.displayName || null
+        });
+
+        // Salva nome e (se trocada) a foto no Firestore. A foto NÃO
+        // sobrescreve o campo se o usuário não escolheu uma nova agora.
+        const dadosSalvar = { nome: novoNome || user.displayName || '' };
+        if (arquivoFotoBase64) dadosSalvar.foto = arquivoFotoBase64;
+
+        await dbFirestore.collection('usuarios').doc(user.uid).set(dadosSalvar, { merge: true });
+
+        document.getElementById('profileUserName').textContent = dadosSalvar.nome || 'Usuário';
+        if (arquivoFotoBase64) document.getElementById('profileUserPhoto').src = arquivoFotoBase64;
+
+        editMsg.textContent = 'Perfil atualizado!';
+        editMsg.className = 'profile-edit-msg ok';
+        setTimeout(fecharEdicaoPerfil, 700);
+      } catch (err) {
+        console.error('Erro ao salvar perfil:', err);
+        editMsg.textContent = 'Não foi possível salvar (' + (err.code || err.message) + ').';
+        editMsg.className = 'profile-edit-msg error';
+      } finally {
+        editSaveBtn.disabled = false;
+        editCancelBtn.disabled = false;
+      }
+    });
+  }
+
+  const logoutBtn = document.getElementById('profileLogoutBtn');
+  if (logoutBtn) {
+    logoutBtn.addEventListener('click', () => {
+      auth.signOut();
+    });
+  }
+
+  const hamburger = document.getElementById('hamburger');
+  const menu = document.getElementById('menu');
+  const overlay = document.getElementById('overlay');
+  const socialHead = document.getElementById('socialHead');
+  const socialItem = document.getElementById('socialItem');
+
+  function openMenu() {
+    menu.classList.add('active');
+    overlay.classList.add('active');
+    hamburger.classList.add('active');
+    hamburger.setAttribute('aria-expanded', 'true');
+    menu.setAttribute('aria-hidden', 'false');
+  }
+
+  function closeMenu() {
+    menu.classList.remove('active');
+    overlay.classList.remove('active');
+    hamburger.classList.remove('active');
+    hamburger.setAttribute('aria-expanded', 'false');
+    menu.setAttribute('aria-hidden', 'true');
+  }
+
+  hamburger.addEventListener('click', () => {
+    menu.classList.contains('active') ? closeMenu() : openMenu();
+  });
+
+  overlay.addEventListener('click', closeMenu);
+
+  socialHead.addEventListener('click', () => {
+    socialItem.classList.toggle('open');
+  });
+
+  /* ============================================================
+     STREAMING (busca de vídeos via YouTube Data API v3)
+  ============================================================ */
+
+  const streamingMenuHead = document.getElementById('streamingMenuHead');
+  const streamingScreen = document.getElementById('streamingScreen');
+  const streamingBackBtn = document.getElementById('streamingBackBtn');
+  const streamingSearchInput = document.getElementById('streamingSearchInput');
+  const streamingSearchBtn = document.getElementById('streamingSearchBtn');
+  const streamingResults = document.getElementById('streamingResults');
+  const streamingPlayerWrap = document.getElementById('streamingPlayerWrap');
+  const streamingSectionTitle = document.getElementById('streamingSectionTitle');
+
+  const YOUTUBE_API_KEY = 'AIzaSyCDSlkG6aAbEuSW3JkxC_bma8Ry8kuldwk';
+  const MEU_CANAL_HANDLE = 'islanaleatorio'; // sem o @
+  let meuCanalId = null;
+  let streamingJaCarregouEmAlta = false;
+
+  async function getMeuCanalId() {
+    if (meuCanalId) return meuCanalId;
+    const url = `https://www.googleapis.com/youtube/v3/channels?part=id&forHandle=${MEU_CANAL_HANDLE}&key=${YOUTUBE_API_KEY}`;
+    const resposta = await fetch(url);
+    const dados = await resposta.json();
+    meuCanalId = dados.items && dados.items[0] ? dados.items[0].id : null;
+    return meuCanalId;
+  }
+
+  streamingMenuHead.addEventListener('click', () => {
+    closeMenu();
+    streamingScreen.classList.add('active');
+    streamingScreen.setAttribute('aria-hidden', 'false');
+
+    // Carrega "Em alta" automaticamente só na primeira vez que abre a aba
+    if (!streamingJaCarregouEmAlta) {
+      streamingJaCarregouEmAlta = true;
+      carregarEmAlta();
+    }
+  });
+
+  streamingBackBtn.addEventListener('click', () => {
+    streamingScreen.classList.remove('active');
+    streamingScreen.setAttribute('aria-hidden', 'true');
+  });
+
+  const ICONE_PLAY = `<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>`;
+
+  // ícones de plataforma (Android, Apple, Windows) flutuando no fundo
+  (function gerarIconesFundo() {
+    const camada = document.getElementById('iconFloatLayer');
+    if (!camada) return;
+
+    const svgs = [
+      // Android
+      `<svg viewBox="0 0 24 24" width="34" height="34" fill="currentColor"><path d="M17.6 9.48l1.84-3.18a.42.42 0 00-.15-.58.42.42 0 00-.58.15L16.8 9.2C15.34 8.5 13.7 8.1 12 8.1s-3.34.4-4.8 1.1L5.14 5.87a.42.42 0 00-.58-.15.42.42 0 00-.15.58L6.24 9.48C3.66 11.05 1.98 13.9 1.7 17.1h20.6c-.28-3.2-1.96-6.05-4.7-7.62zM7 15.25a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5zm10 0a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5z"/></svg>`,
+      // Apple
+      `<svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor"><path d="M16.365 1.43c0 1.14-.462 2.226-1.21 3.032-.82.887-2.16 1.573-3.28 1.48-.14-1.1.44-2.26 1.19-3.02.83-.85 2.27-1.49 3.3-1.49zM20.9 17.27c-.55 1.23-.81 1.78-1.52 2.87-.99 1.53-2.38 3.44-4.11 3.46-1.53.02-1.92-1-4-1-2.08 0-2.5.98-4.03.98-1.72 0-3.03-1.73-4.02-3.26C.62 16.65-.34 12.03 1 9.05c.94-2.08 2.62-3.4 4.42-3.42 1.5-.02 2.9 1.02 3.83 1.02.9 0 2.6-1.26 4.4-1.08.75.03 2.86.3 4.2 2.28-.11.07-2.5 1.47-2.48 4.36.03 3.46 3.03 4.62 3.05 4.63-.02.08-.47 1.62-1.52 3.43z"/></svg>`,
+      // Windows
+      `<svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor"><path d="M3 5.5L10.4 4.5V11.3H3V5.5zM11.3 4.4L21 3V11.2H11.3V4.4zM3 12.2H10.4V19L3 18V12.2zM11.3 12.2H21V21L11.3 19.6V12.2z"/></svg>`
+    ];
+
+    const TOTAL_ICONES = 14;
+    const icones = [];
+    for (let i = 0; i < TOTAL_ICONES; i++) {
+      const wrap = document.createElement('div');
+      wrap.className = 'icon-float';
+      wrap.innerHTML = svgs[i % svgs.length];
+      const leftBase = Math.random() * 90;
+      const topBase = Math.random() * 90;
+      wrap.style.left = leftBase + '%';
+      wrap.style.top = topBase + '%';
+      wrap.style.opacity = (0.5 + Math.random() * 0.5).toFixed(2);
+      camada.appendChild(wrap);
+
+      icones.push({
+        el: wrap,
+        topBase,
+        leftBase,
+        speed: 0.15 + Math.random() * 0.25,
+        phase: Math.random() * Math.PI * 2,
+        driftX: 6 + Math.random() * 10,
+        driftY: 14 + Math.random() * 18
+      });
+    }
+
+    function animarIcones(tempo) {
+      const t = tempo / 1000;
+      icones.forEach(ic => {
+        const y = Math.sin(t * ic.speed + ic.phase) * ic.driftY;
+        const x = Math.cos(t * ic.speed * 0.7 + ic.phase) * ic.driftX;
+        const rot = Math.sin(t * ic.speed * 0.5 + ic.phase) * 10;
+        ic.el.style.transform = `translate(${x}px, ${y}px) rotate(${rot}deg)`;
+      });
+      requestAnimationFrame(animarIcones);
+    }
+    requestAnimationFrame(animarIcones);
+  })();
+
+  function renderizarResultados(items) {
+    streamingResults.innerHTML = '';
+    items.forEach(item => {
+      const videoId = item.id.videoId || item.id;
+      const titulo = item.snippet.title;
+      const canal = item.snippet.channelTitle;
+      const thumb = item.snippet.thumbnails.medium.url;
+
+      const card = document.createElement('div');
+      card.className = 'streaming-result-card';
+      card.innerHTML = `
+        <div class="streaming-result-thumb">
+          <img src="${thumb}" alt="">
+          <div class="streaming-play-overlay">${ICONE_PLAY}</div>
+        </div>
+        <div class="streaming-result-info">
+          <div class="streaming-result-title">${escapeHtml(titulo)}</div>
+          <div class="streaming-result-channel">${escapeHtml(canal)}</div>
+        </div>
+      `;
+      card.addEventListener('click', () => tocarVideo(videoId));
+      streamingResults.appendChild(card);
+    });
+  }
+
+  async function carregarEmAlta() {
+    streamingSectionTitle.textContent = 'Vídeos do canal';
+    streamingResults.innerHTML = '<div class="streaming-empty-msg">Carregando...</div>';
+
+    try {
+      const canalId = await getMeuCanalId();
+      if (!canalId) {
+        streamingResults.innerHTML = '<div class="streaming-empty-msg">Não foi possível carregar o canal.</div>';
+        return;
+      }
+
+      const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&order=date&channelId=${canalId}&maxResults=15&key=${YOUTUBE_API_KEY}`;
+      const resposta = await fetch(url);
+      const dados = await resposta.json();
+
+      if (!dados.items || dados.items.length === 0) {
+        streamingResults.innerHTML = '<div class="streaming-empty-msg">Nenhum vídeo encontrado.</div>';
+        return;
+      }
+
+      renderizarResultados(dados.items);
+    } catch (erro) {
+      streamingResults.innerHTML = '<div class="streaming-empty-msg">Erro ao carregar os vídeos.</div>';
+    }
+  }
+
+  async function buscarVideos() {
+    const termo = streamingSearchInput.value.trim();
+    if (!termo) return;
+
+    streamingSectionTitle.textContent = `Resultados para "${termo}"`;
+    streamingResults.innerHTML = '<div class="streaming-empty-msg">Buscando...</div>';
+
+    try {
+      const canalId = await getMeuCanalId();
+      if (!canalId) {
+        streamingResults.innerHTML = '<div class="streaming-empty-msg">Não foi possível carregar o canal.</div>';
+        return;
+      }
+
+      const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&channelId=${canalId}&maxResults=15&q=${encodeURIComponent(termo)}&key=${YOUTUBE_API_KEY}`;
+      const resposta = await fetch(url);
+      const dados = await resposta.json();
+
+      if (!dados.items || dados.items.length === 0) {
+        streamingResults.innerHTML = '<div class="streaming-empty-msg">Nenhum vídeo encontrado no canal.</div>';
+        return;
+      }
+
+      renderizarResultados(dados.items);
+    } catch (erro) {
+      streamingResults.innerHTML = '<div class="streaming-empty-msg">Erro ao buscar vídeos. Tente novamente.</div>';
+    }
+  }
+
+  function tocarVideo(videoId) {
+    streamingPlayerWrap.innerHTML = `<iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1" allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe>`;
+    streamingPlayerWrap.classList.add('active');
+    streamingPlayerWrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  streamingSearchBtn.addEventListener('click', buscarVideos);
+  streamingSearchInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      buscarVideos();
+    }
+  });
+
+  /* ============================================================
+     RENDERIZAÇÃO AUTOMÁTICA A PARTIR DE conteudo.js
+     Não precisa editar daqui pra baixo. Os botões são montados
+     sozinhos com base no que está escrito em conteudo.js.
+  ============================================================ */
+
+  const ICONES_SVG = {
+    instagram: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="2" y="2" width="20" height="20" rx="5"/>
+      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+      <line x1="17.5" y1="6.5" x2="17.5" y2="6.5"/>
+    </svg>`,
+    whatsapp: `<svg viewBox="0 0 24 24" fill="currentColor">
+      <path d="M17.6 6.32A8.86 8.86 0 0 0 12.05 4a8.94 8.94 0 0 0-7.74 13.34L3 21l3.79-1.24a8.9 8.9 0 0 0 4.26 1.09h.01a8.94 8.94 0 0 0 6.54-15.53zm-5.55 13.7h-.01a7.42 7.42 0 0 1-3.78-1.04l-.27-.16-2.81.92.93-2.72-.18-.28a7.43 7.43 0 1 1 13.78-4.1 7.43 7.43 0 0 1-7.66 7.38zm4.07-5.56c-.22-.11-1.31-.65-1.51-.72-.2-.08-.35-.11-.5.11-.15.22-.57.72-.7.86-.13.15-.26.16-.48.05-.22-.11-.93-.34-1.77-1.09a6.62 6.62 0 0 1-1.22-1.52c-.13-.22-.01-.34.1-.46.11-.11.25-.29.37-.43.13-.15.17-.25.25-.41.08-.16.04-.3-.03-.42-.08-.11-.7-1.69-.96-2.3-.25-.6-.51-.52-.7-.53-.18-.01-.39-.01-.6-.01-.2 0-.53.08-.81.38-.27.3-1.05 1.03-1.05 2.51 0 1.48 1.07 2.91 1.22 3.11.15.2 2.1 3.2 5.08 4.37 2.98 1.17 2.98.78 3.52.73.54-.05 1.74-.71 1.99-1.4.25-.69.25-1.28.18-1.4-.07-.12-.26-.19-.48-.3z"/>
+    </svg>`
+  };
+
+  function montarRedesSociais() {
+    const container = document.getElementById('socialSubmenu');
+    if (!container || !window.CONTEUDO) return;
+    container.innerHTML = '';
+
+    window.CONTEUDO.redesSociais.forEach(item => {
+      const a = document.createElement('a');
+      a.className = 'social-btn';
+      a.href = item.link;
+      a.target = '_blank';
+      a.rel = 'noopener';
+
+      const temIconeCustom = typeof item.icone === 'string' && (item.icone.startsWith('http') || item.icone.startsWith('data:image'));
+
+      if (temIconeCustom) {
+        a.innerHTML = `<span class="social-icon"><img src="${item.icone}" alt="${item.nome}" style="width:100%;height:100%;border-radius:6px;object-fit:cover;"></span>${item.nome}`;
+      } else {
+        const iconClass = item.tipo === 'instagram' ? 'ig-icon' : (item.tipo === 'whatsapp' ? 'wa-icon' : '');
+        const svg = ICONES_SVG[item.tipo] || '';
+        a.innerHTML = `<span class="social-icon ${iconClass}">${svg}</span>${item.nome}`;
+      }
+
+      container.appendChild(a);
+    });
+  }
+
+  const FDROID_SEARCH_PROXY = '/api/fdroid-search?q=';
+  const FDROID_PACKAGE_PROXY = '/api/fdroid-package?pkg=';
+  const FDROID_APK_BASE = 'https://f-droid.org/repo/';
+
+  const CATEGORIAS_HOME = [
+    { id: 'usados', titulo: 'Usados normalmente', tipo: 'usados' },
+    { id: 'mais-baixados', titulo: 'Mais baixados', tipo: 'fdroid', query: 'app' },
+    { id: 'jogos', titulo: 'Jogos', tipo: 'fdroid', query: 'jogo' },
+    { id: 'ferramentas', titulo: 'Ferramentas', tipo: 'fdroid', query: 'ferramentas' },
+    { id: 'camera', titulo: 'Câmera e Vídeo', tipo: 'fdroid', query: 'câmera' },
+    { id: 'musica', titulo: 'Música', tipo: 'fdroid', query: 'música' },
+    { id: 'manuais', titulo: 'Adicionados por Islan', tipo: 'manual' }
+  ];
+
+  let categoriaAtivaId = CATEGORIAS_HOME[0].id;
+  const cacheCategorias = {}; // evita rebuscar toda vez que a pessoa troca de aba
+
+  async function buscarAppsFDroid(termo) {
+    try {
+      const resp = await fetch(FDROID_SEARCH_PROXY + encodeURIComponent(termo));
+      if (!resp.ok) return [];
+      const dados = await resp.json();
+      return Array.isArray(dados) ? dados : (dados.apps || []);
+    } catch (erro) {
+      return [];
+    }
+  }
+
+  async function pegarDadosPacote(packageName) {
+    try {
+      const resp = await fetch(FDROID_PACKAGE_PROXY + encodeURIComponent(packageName));
+      if (!resp.ok) return null;
+      return await resp.json();
+    } catch (erro) {
+      return null;
+    }
+  }
+
+  // Busca os apps adicionados manualmente (área admin) pra mostrar na home.
+  // Qualquer visitante pode ler essa lista, só não pode escrever nela
+  // (isso é controlado pelas regras do Firestore, não por aqui).
+  async function carregarAppsManuaisPublico() {
+    try {
+      const snapshot = await dbFirestore.collection('appsManuais')
+        .orderBy('data', 'desc').limit(20).get();
+
+      const lista = [];
+      snapshot.forEach(doc => {
+        const d = doc.data();
+        lista.push({
+          name: d.nome,
+          description: d.descricao,
+          icon: d.icone,
+          apkUrl: d.link,
+          manual: true
+        });
+      });
+      return lista;
+    } catch (erro) {
+      return [];
+    }
+  }
+
+  function montarBadges(app) {
+    if (app.manual) {
+      return `<span class="app-badge app-badge-verified">Adicionado por Islan</span>`;
+    }
+
+    const antiFeatures = app.antiFeatures || app.antifeatures || [];
+    let html = `<span class="app-badge app-badge-verified">✓ Verificado F-Droid</span>`;
+
+    if (!antiFeatures.length) {
+      html += `<span class="app-badge app-badge-clean">Sem anúncios ou rastreadores</span>`;
+    } else {
+      antiFeatures.forEach(af => {
+        html += `<span class="app-badge app-badge-warn">${af}</span>`;
+      });
+    }
+    return html;
+  }
+
+  function criarMiniCard(app) {
+    const packageName = app.packageName || app.package || (app.url ? app.url.replace(/\/$/, '').split('/').pop() : '');
+    const nome = app.name || app.localizedName || packageName;
+    const icone = app.icon || app.iconUrl || '';
+
+    const a = document.createElement('a');
+    a.className = 'app-mini-card';
+    a.href = '#';
+
+    const iconeHtml = icone
+      ? `<img src="${icone}" alt="${nome}" loading="lazy">`
+      : (nome || '?').charAt(0).toUpperCase();
+
+    a.innerHTML = `
+      <div class="app-mini-icon">${iconeHtml}</div>
+      <div class="app-mini-name">${nome}</div>
+    `;
+
+    a.addEventListener('click', (ev) => {
+      ev.preventDefault();
+      abrirModalApp(app);
+    });
+
+    return a;
+  }
+
+  function abrirModalApp(app) {
+    const packageName = app.packageName || app.package || (app.url ? app.url.replace(/\/$/, '').split('/').pop() : '');
+    const nome = app.name || app.localizedName || packageName;
+    const descricao = app.description || app.summary || 'Sem descrição disponível.';
+    const icone = app.icon || app.iconUrl || '';
+
+    document.getElementById('appModalIcon').innerHTML = icone
+      ? `<img src="${icone}" alt="${nome}">`
+      : (nome || '?').charAt(0).toUpperCase();
+    document.getElementById('appModalName').textContent = nome;
+    document.getElementById('appModalBadges').innerHTML = montarBadges(app);
+    document.getElementById('appModalDesc').textContent = descricao;
+
+    const btn = document.getElementById('appModalDownloadBtn');
+    btn.textContent = 'Baixar APK';
+    btn.disabled = false;
+
+    if (app.manual) {
+      // App adicionado manualmente: o link já é o link final (ex: MediaFire),
+      // não precisa consultar a API do F-Droid.
+      btn.onclick = () => {
+        window.open(app.apkUrl, '_blank');
+        if (window.registrarDownloadNoHistorico) {
+          window.registrarDownloadNoHistorico(app);
+        }
+      };
+    } else {
+      btn.onclick = async () => {
+        btn.disabled = true;
+        btn.textContent = 'Preparando download...';
+        const dados = await pegarDadosPacote(packageName);
+        const versionCode = dados && dados.suggestedVersionCode;
+
+        if (versionCode) {
+          const link = `${FDROID_APK_BASE}${packageName}_${versionCode}.apk`;
+          const dl = document.createElement('a');
+          dl.href = link;
+          dl.setAttribute('download', '');
+          document.body.appendChild(dl);
+          dl.click();
+          dl.remove();
+
+          // Fase 3: registra o download no histórico do usuário (se estiver logado)
+          if (window.registrarDownloadNoHistorico) {
+            window.registrarDownloadNoHistorico(app);
+          }
+
+          btn.textContent = 'Baixar APK';
+          btn.disabled = false;
+        } else {
+          btn.textContent = 'Erro, tente de novo';
+          setTimeout(() => {
+            btn.textContent = 'Baixar APK';
+            btn.disabled = false;
+          }, 2000);
+        }
+      };
+    }
+
+    document.getElementById('appModalOverlay').classList.add('active');
+  }
+
+  function fecharModalApp() {
+    document.getElementById('appModalOverlay').classList.remove('active');
+  }
+
+  document.getElementById('appModalOverlay').addEventListener('click', (ev) => {
+    if (ev.target.id === 'appModalOverlay') fecharModalApp();
+  });
+
+  // Cria uma linha inteira (ícone + nome), empilhada de cima pra baixo,
+  // sem scroll lateral -- é o card usado dentro da categoria selecionada.
+  function criarCardLista(app) {
+    const packageName = app.packageName || app.package || (app.url ? app.url.replace(/\/$/, '').split('/').pop() : '');
+    const nome = app.name || app.localizedName || packageName;
+    const icone = app.icon || app.iconUrl || '';
+    const sub = app.manual ? 'Adicionado por Islan' : (app.summary || app.description || '');
+
+    const a = document.createElement('a');
+    a.className = 'app-list-card';
+    a.href = '#';
+
+    const iconeHtml = icone
+      ? `<img src="${icone}" alt="${nome}" loading="lazy">`
+      : (nome || '?').charAt(0).toUpperCase();
+
+    a.innerHTML = `
+      <div class="app-mini-icon">${iconeHtml}</div>
+      <div class="app-list-card-info">
+        <div class="app-list-card-name">${nome}</div>
+        <div class="app-list-card-sub">${sub}</div>
+      </div>
+    `;
+
+    a.addEventListener('click', (ev) => {
+      ev.preventDefault();
+      abrirModalApp(app);
+    });
+
+    return a;
+  }
+
+  function renderizarListaApps(apps, mensagemVazio) {
+    const wrap = document.getElementById('appsCategoriesWrap');
+    if (!wrap) return;
+    wrap.innerHTML = '';
+    if (!apps.length) {
+      wrap.innerHTML = `<div class="appstore-empty-msg">${mensagemVazio}</div>`;
+      return;
+    }
+    apps.forEach(app => wrap.appendChild(criarCardLista(app)));
+  }
+
+  // Monta a aba "Usados normalmente" a partir do histórico de downloads
+  // do usuário logado (deduplicado por pacote/link, mais recente primeiro).
+  async function buscarAppsUsadosNormalmente() {
+    const user = auth.currentUser;
+    if (!user) return { apps: [], vazio: 'Faça login pra ver seus apps mais usados aqui.' };
+
+    try {
+      const snapshot = await dbFirestore.collection('usuarios').doc(user.uid)
+        .collection('downloads').orderBy('data', 'desc').limit(50).get();
+
+      const vistos = new Set();
+      const apps = [];
+      snapshot.forEach(doc => {
+        const d = doc.data();
+        const chave = d.packageName || d.apkUrl || d.nome;
+        if (!chave || vistos.has(chave)) return;
+        vistos.add(chave);
+        apps.push({
+          name: d.nome,
+          packageName: d.packageName || '',
+          icon: d.icone || '',
+          manual: !!d.manual,
+          apkUrl: d.apkUrl || ''
+        });
+      });
+      return { apps: apps.slice(0, 20), vazio: 'Você ainda não baixou nenhum app por aqui.' };
+    } catch (erro) {
+      return { apps: [], vazio: 'Não foi possível carregar seus apps usados.' };
+    }
+  }
+
+  function montarAbasCategorias() {
+    const tabsWrap = document.getElementById('categoryTabs');
+    if (!tabsWrap) return;
+    tabsWrap.innerHTML = '';
+    CATEGORIAS_HOME.forEach(cat => {
+      const tab = document.createElement('button');
+      tab.type = 'button';
+      tab.className = 'category-tab' + (cat.id === categoriaAtivaId ? ' active' : '');
+      tab.textContent = cat.titulo;
+      tab.addEventListener('click', () => selecionarCategoria(cat.id));
+      tabsWrap.appendChild(tab);
+    });
+  }
+
+  function marcarAbaAtiva() {
+    document.querySelectorAll('#categoryTabs .category-tab').forEach((tab, i) => {
+      tab.classList.toggle('active', CATEGORIAS_HOME[i].id === categoriaAtivaId);
+    });
+  }
+
+  async function selecionarCategoria(id) {
+    categoriaAtivaId = id;
+    marcarAbaAtiva();
+    if (appsSearchInput) appsSearchInput.value = '';
+    await renderizarCategoriaAtiva();
+  }
+
+  async function renderizarCategoriaAtiva() {
+    const wrap = document.getElementById('appsCategoriesWrap');
+    if (!wrap) return;
+    const cat = CATEGORIAS_HOME.find(c => c.id === categoriaAtivaId);
+    if (!cat) return;
+
+    wrap.innerHTML = '<div class="appstore-empty-msg">Carregando apps...</div>';
+
+    if (cat.tipo === 'usados') {
+      const { apps, vazio } = await buscarAppsUsadosNormalmente();
+      renderizarListaApps(apps, vazio);
+      return;
+    }
+
+    if (cat.tipo === 'manual') {
+      try {
+        if (!cacheCategorias[cat.id]) {
+          cacheCategorias[cat.id] = await carregarAppsManuaisPublico();
+        }
+        renderizarListaApps(cacheCategorias[cat.id], 'Nenhum app adicionado ainda.');
+      } catch (erro) {
+        renderizarListaApps([], 'Não foi possível carregar esses apps agora.');
+      }
+      return;
+    }
+
+    // tipo 'fdroid'
+    try {
+      if (!cacheCategorias[cat.id]) {
+        cacheCategorias[cat.id] = await buscarAppsFDroid(cat.query);
+      }
+      renderizarListaApps((cacheCategorias[cat.id] || []).slice(0, 30), 'Não foi possível carregar os apps agora.');
+    } catch (erro) {
+      renderizarListaApps([], 'Erro ao carregar apps. Tente novamente.');
+    }
+  }
+
+  async function buscarEExibirResultados(termo) {
+    if (!termo) {
+      await renderizarCategoriaAtiva();
+      return;
+    }
+
+    const wrap = document.getElementById('appsCategoriesWrap');
+    if (!wrap) return;
+
+    wrap.innerHTML = '<div class="appstore-empty-msg">Buscando...</div>';
+    const apps = await buscarAppsFDroid(termo);
+    renderizarListaApps(apps, 'Nenhum app encontrado.');
+  }
+
+  const appsSearchInput = document.getElementById('appsSearchInput');
+  const appsSearchBtn = document.getElementById('appsSearchBtn');
+
+  if (appsSearchBtn) {
+    appsSearchBtn.addEventListener('click', () => {
+      buscarEExibirResultados(appsSearchInput.value.trim());
+    });
+  }
+  if (appsSearchInput) {
+    appsSearchInput.addEventListener('keydown', (ev) => {
+      if (ev.key === 'Enter') buscarEExibirResultados(appsSearchInput.value.trim());
+    });
+  }
+
+  montarRedesSociais();
+  montarAbasCategorias();
+  renderizarCategoriaAtiva();
+
+  /* ============================================================
+     ÁREA ADMIN ESCONDIDA (adicionar apps manualmente, fora do
+     F-Droid). Só abre acessando o site com #admin no final do
+     link. A senha fica em conteudo.js (campo senhaAdmin).
+  ============================================================ */
+  (function () {
+    const overlay = document.getElementById('adminOverlay');
+    const loginBox = document.getElementById('adminLoginBox');
+    const painelBox = document.getElementById('adminPanelBox');
+    const senhaInput = document.getElementById('adminPasswordInput');
+    const loginBtn = document.getElementById('adminLoginBtn');
+    const loginMsg = document.getElementById('adminLoginMsg');
+
+    const menuBox = document.getElementById('adminMenuBox');
+    const menuAddBtn = document.getElementById('adminMenuAddBtn');
+    const menuEditBtn = document.getElementById('adminMenuEditBtn');
+
+    const listBox = document.getElementById('adminListBox');
+    const listVoltarBtn = document.getElementById('adminListVoltarBtn');
+    const listaEl = document.getElementById('adminListaApps');
+
+    const formBox = document.getElementById('adminFormBox');
+    const formVoltarBtn = document.getElementById('adminFormVoltarBtn');
+    const formTitulo = document.getElementById('adminFormTitulo');
+    const salvarBtn = document.getElementById('adminSalvarBtn');
+    const removerBtn = document.getElementById('adminRemoverBtn');
+    const salvarMsg = document.getElementById('adminSalvarMsg');
+
+    let editandoId = null;
+
+    if (!overlay) return;
+
+    // ---------- Navegação entre as telas do painel ----------
+    function mostrarTela(tela) {
+      menuBox.style.display = tela === 'menu' ? 'block' : 'none';
+      listBox.style.display = tela === 'lista' ? 'block' : 'none';
+      formBox.style.display = tela === 'form' ? 'block' : 'none';
+    }
+
+    function limparFormulario() {
+      document.getElementById('adminAppNome').value = '';
+      document.getElementById('adminAppDesc').value = '';
+      document.getElementById('adminAppIcone').value = '';
+      document.getElementById('adminAppLink').value = '';
+    }
+
+    function abrirFormularioNovo() {
+      editandoId = null;
+      limparFormulario();
+      formTitulo.textContent = 'Adicionar app manualmente';
+      salvarBtn.textContent = 'Adicionar app';
+      removerBtn.style.display = 'none';
+      salvarMsg.textContent = '';
+      mostrarTela('form');
+    }
+
+    function abrirFormularioEdicao(id, dados) {
+      editandoId = id;
+      document.getElementById('adminAppNome').value = dados.nome || '';
+      document.getElementById('adminAppDesc').value = dados.descricao || '';
+      document.getElementById('adminAppIcone').value = dados.icone || '';
+      document.getElementById('adminAppLink').value = dados.link || '';
+      formTitulo.textContent = 'Editando: ' + (dados.nome || '');
+      salvarBtn.textContent = 'Salvar alterações';
+      removerBtn.style.display = 'block';
+      salvarMsg.textContent = '';
+      mostrarTela('form');
+    }
+
+    function abrirPainelAdmin() {
+      overlay.classList.add('active');
+      loginBox.style.display = 'block';
+      painelBox.style.display = 'none';
+      senhaInput.value = '';
+      loginMsg.textContent = '';
+      senhaInput.focus();
+      mostrarTela('menu');
+    }
+
+    function checarHashAdmin() {
+      if (window.location.hash === '#admin') abrirPainelAdmin();
+    }
+    checarHashAdmin();
+    window.addEventListener('hashchange', checarHashAdmin);
+
+    overlay.addEventListener('click', (ev) => {
+      if (ev.target.id === 'adminOverlay') {
+        overlay.classList.remove('active');
+        history.replaceState(null, '', window.location.pathname + window.location.search);
+      }
+    });
+
+    // UID da sua conta Google -- só ela tem permissão de escrita
+    // liberada nas regras do Firestore (veja o console do Firebase).
+    const ADMIN_UID = 'B3c2bjE4ASOTWdVVMp2fk39hsBg2';
+
+    loginBtn.addEventListener('click', () => {
+      const senhaCerta = (window.CONTEUDO && window.CONTEUDO.senhaAdmin) || '';
+      if (!senhaInput.value || senhaInput.value !== senhaCerta) {
+        loginMsg.textContent = 'Senha incorreta.';
+        return;
+      }
+      if (!auth.currentUser || auth.currentUser.uid !== ADMIN_UID) {
+        loginMsg.textContent = 'Senha certa, mas você precisa estar logado com sua conta Google (aba Perfil) pra poder salvar.';
+        return;
+      }
+      loginBox.style.display = 'none';
+      painelBox.style.display = 'block';
+      mostrarTela('menu');
+    });
+
+    // ---------- Botões do menu ----------
+    menuAddBtn.addEventListener('click', abrirFormularioNovo);
+    menuEditBtn.addEventListener('click', () => {
+      mostrarTela('lista');
+      carregarListaAdmin();
+    });
+
+    // ---------- Botões "Voltar" ----------
+    listVoltarBtn.addEventListener('click', () => mostrarTela('menu'));
+    formVoltarBtn.addEventListener('click', () => mostrarTela(editandoId ? 'lista' : 'menu'));
+
+    // ---------- Salvar (cria OU atualiza, dependendo de editandoId) ----------
+    salvarBtn.addEventListener('click', async () => {
+      const nome = document.getElementById('adminAppNome').value.trim();
+      const descricao = document.getElementById('adminAppDesc').value.trim();
+      const icone = document.getElementById('adminAppIcone').value.trim();
+      const link = document.getElementById('adminAppLink').value.trim();
+
+      if (!nome || !link) {
+        salvarMsg.textContent = 'Preencha pelo menos o nome e o link do APK.';
+        return;
+      }
+
+      salvarBtn.disabled = true;
+      salvarMsg.textContent = 'Salvando...';
+
+      try {
+        if (editandoId) {
+          await dbFirestore.collection('appsManuais').doc(editandoId).update({
+            nome, descricao, icone, link
+          });
+          salvarMsg.textContent = 'App atualizado!';
+        } else {
+          await dbFirestore.collection('appsManuais').add({
+            nome, descricao, icone, link,
+            data: firebase.firestore.FieldValue.serverTimestamp()
+          });
+          salvarMsg.textContent = 'App adicionado!';
+        }
+        delete cacheCategorias['manuais'];
+        if (categoriaAtivaId === 'manuais') renderizarCategoriaAtiva();
+        setTimeout(() => mostrarTela('menu'), 700);
+      } catch (erro) {
+        salvarMsg.textContent = 'Erro ao salvar: ' + erro.message;
+      } finally {
+        salvarBtn.disabled = false;
+      }
+    });
+
+    // ---------- Remover (só aparece no modo edição) ----------
+    removerBtn.addEventListener('click', async () => {
+      if (!editandoId) return;
+      if (!confirm('Remover este app de vez?')) return;
+      removerBtn.disabled = true;
+      salvarMsg.textContent = 'Removendo...';
+      try {
+        await dbFirestore.collection('appsManuais').doc(editandoId).delete();
+        delete cacheCategorias['manuais'];
+        if (categoriaAtivaId === 'manuais') renderizarCategoriaAtiva();
+        salvarMsg.textContent = 'App removido!';
+        setTimeout(() => mostrarTela('menu'), 700);
+      } catch (erro) {
+        salvarMsg.textContent = 'Erro ao remover: ' + erro.message;
+      } finally {
+        removerBtn.disabled = false;
+      }
+    });
+
+    // ---------- Lista de apps manuais, só pra escolher qual editar ----------
+    async function carregarListaAdmin() {
+      listaEl.textContent = 'Carregando...';
+      try {
+        const snapshot = await dbFirestore.collection('appsManuais').orderBy('data', 'desc').get();
+        if (snapshot.empty) {
+          listaEl.textContent = 'Nenhum app adicionado ainda.';
+          return;
+        }
+        listaEl.innerHTML = '';
+        snapshot.forEach(doc => {
+          const item = document.createElement('div');
+          item.className = 'admin-list-item';
+          item.innerHTML = `<span>${doc.data().nome}</span>`;
+
+          const editBtn = document.createElement('button');
+          editBtn.textContent = 'Editar';
+          editBtn.style.color = 'var(--blue-glow)';
+          editBtn.addEventListener('click', () => abrirFormularioEdicao(doc.id, doc.data()));
+
+          item.appendChild(editBtn);
+          listaEl.appendChild(item);
+        });
+      } catch (erro) {
+        listaEl.textContent = 'Erro ao carregar lista.';
+      }
+    }
+  })();
+
+  /* ============================================================
+     CAIXA DE COMENTÁRIOS (Firebase Realtime Database)
+     Não precisa editar nada aqui. As chaves abaixo são públicas
+     por natureza (toda configuração web do Firebase é), a
+     segurança real é controlada pelas regras do banco, não por
+     essas chaves ficarem escondidas.
+  ============================================================ */
+
+  // Reaproveita o mesmo app/conexão do Firebase já iniciado lá em cima
+  // (login com Google + histórico). Não precisa inicializar de novo.
+  const comentariosRef = dbRealtime.ref('comentarios');
+  const LIMITE_COMENTARIOS = 30;
+
+  function mostrarErroNaTela(mensagem) {
+    const div = document.createElement('div');
+    div.style.cssText = 'position:fixed;bottom:10px;left:10px;right:10px;background:#3a0d0d;color:#ff8a8a;padding:12px;border-radius:10px;font-size:0.75rem;z-index:9999;border:1px solid #aa3333;word-break:break-word;';
+    div.textContent = 'ERRO: ' + mensagem;
+    document.body.appendChild(div);
+  }
+
+  const commentText = document.getElementById('commentText');
+  const nameRow = document.getElementById('nameRow');
+  const commentName = document.getElementById('commentName');
+  const sendBtn = document.getElementById('sendBtn');
+  const commentsList = document.getElementById('commentsList');
+  const successToast = document.getElementById('successToast');
+  let toastTimeout = null;
+
+  function mostrarSucesso() {
+    clearTimeout(toastTimeout);
+    successToast.classList.add('show');
+    toastTimeout = setTimeout(() => {
+      successToast.classList.remove('show');
+    }, 2500);
+  }
+
+  // Mostra o campo de nome quando a pessoa aperta Enter no comentário
+  commentText.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      if (commentText.value.trim().length > 0) {
+        nameRow.classList.add('active');
+        commentName.focus();
+      }
+    }
+  });
+
+  function enviarComentario() {
+    const texto = commentText.value.trim();
+    const nome = commentName.value.trim();
+
+    if (!texto || !nome) return;
+
+    comentariosRef.push({
+      nome: nome,
+      texto: texto,
+      timestamp: Date.now()
+    }).then(() => {
+      mostrarSucesso();
+    });
+
+    commentText.value = '';
+    commentName.value = '';
+    nameRow.classList.remove('active');
+  }
+
+  sendBtn.addEventListener('click', enviarComentario);
+  commentName.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      enviarComentario();
+    }
+  });
+
+  // Escuta os comentários em tempo real
+  comentariosRef.on('value', (snapshot) => {
+    const dados = snapshot.val();
+    commentsList.innerHTML = '';
+
+    if (!dados) return;
+
+    // Transforma em array e ordena do mais novo para o mais antigo
+    const lista = Object.entries(dados)
+      .map(([chave, valor]) => ({ chave, ...valor }))
+      .sort((a, b) => b.timestamp - a.timestamp);
+
+    // Se atingiu o limite, reseta tudo (apaga sem avisar) e para por aqui
+    if (lista.length >= LIMITE_COMENTARIOS) {
+      comentariosRef.remove();
+      return;
+    }
+
+    lista.forEach(item => {
+      const div = document.createElement('div');
+      div.className = 'comment-item';
+      div.innerHTML = `
+        <div class="nome">${escapeHtml(item.nome)}</div>
+        <div class="texto">${escapeHtml(item.texto)}</div>
+      `;
+      commentsList.appendChild(div);
+    });
+  });
+
+  // Evita que alguém injete HTML/script malicioso pelo campo de comentário
+  function escapeHtml(str) {
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  /* ============================================================
+     CONTADOR DE VISUALIZAÇÕES (1 por dispositivo)
+     Usa uma marca salva no navegador da pessoa (localStorage)
+     pra saber se aquele aparelho específico já foi contado antes.
+     Se a pessoa limpar os dados do navegador, conta de novo.
+  ============================================================ */
+
+  const viewCountRef = dbRealtime.ref('visualizacoes/total');
+  const viewCountSpan = document.getElementById('viewCount');
+  const JA_VISITOU_CHAVE = 'islanfx_ja_visitou';
+
+  // Mostra o número atual em tempo real pra todo mundo
+  viewCountRef.on('value', (snapshot) => {
+    const valor = snapshot.val() || 0;
+    viewCountSpan.textContent = valor;
+  });
+
+  // Se esse dispositivo nunca visitou antes, soma 1 e marca como visitado
+  if (!localStorage.getItem(JA_VISITOU_CHAVE)) {
+    viewCountRef.transaction((valorAtual) => {
+      return (valorAtual || 0) + 1;
+    });
+    localStorage.setItem(JA_VISITOU_CHAVE, 'true');
+  }
+
+</script>
+
+</body>
+</html>
